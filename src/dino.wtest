@@ -25,14 +25,14 @@ test "dino choca"{
 
 test "cactus se mueve"{
 	cactus.mover()
-	assert.that(cactus.posicionInicial().equals(cactus.position().right(1))
+	assert.that(cactus.posicionInicial().equals(cactus.position().right(1)))
 }
 
 
 test "control límite de pantalla"{
 	cactus.position(game.at(0,0))
 	cactus.mover()
-	assert.that(cactus.position().equals(cactus.posicionInicial())
+	assert.that(cactus.position().equals(cactus.posicionInicial()))
 }
 
 test "cactus choca, dino muere, juego termina"{
