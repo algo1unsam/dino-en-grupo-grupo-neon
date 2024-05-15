@@ -58,21 +58,23 @@ object reloj {
 	method text() = tiempo.toString()
 	method position() = game.at(1, game.height()-1)
 	
-	method pasarTiempo() {
-		//COMPLETAR
+	method pasarTiempo() {	
+		tiempo=tiempo+(100/1000)
 	}
+	
 	method iniciar(){
 		tiempo = 0
 		game.onTick(100,"tiempo",{self.pasarTiempo()})
 	}
+	
 	method detener(){
-		//COMPLETAR
+		game.removeTickEvent("tiempo")
 	}
 }
 
 object cactus {
 	 
-	var position = self.posicionInicial()
+	var property position = self.posicionInicial()
 
 	method image() = "cactus.png"
 	method position() = position
@@ -85,14 +87,19 @@ object cactus {
 	}
 	
 	method mover(){
-		//COMPLETAR
+		
+		if(position.x()==0){
+			position=self.posicionInicial()
+		}
+		else
+		{position=position.left(1)}
 	}
 	
 	method chocar(){
-		//COMPLETAR
+		juego.terminar()
 	}
     method detener(){
-		//COMPLETAR
+		game.removeTickEvent("moverCactus")
 	}
 }
 
@@ -105,7 +112,8 @@ object suelo{
 
 
 object dino {
-	var vivo = true
+	
+	var property vivo = true
 
 	var position = game.at(1,suelo.position().y())
 	
@@ -113,7 +121,8 @@ object dino {
 	method position() = position
 	
 	method saltar(){
-		//COMPLETAR
+		self.subir()
+		game.schedule(300,{self.bajar()})
 	}
 	
 	method subir(){
@@ -123,14 +132,18 @@ object dino {
 	method bajar(){
 		position = position.down(1)
 	}
+	
 	method morir(){
 		game.say(self,"¡Auch!")
 		vivo = false
 	}
+	
 	method iniciar() {
 		vivo = true
 	}
+	
 	method estaVivo() {
 		return vivo
 	}
 }
+

@@ -1,9 +1,45 @@
 import dino.*
-
+import wollok.game.*
 
 test "pasa el tiempo" {
 
 	reloj.pasarTiempo()
 	reloj.pasarTiempo()
-	assert.equals("2",reloj.text())
+	assert.equals("0.2",reloj.text())
 }
+
+test "dino salta"{
+	juego.iniciar()
+	dino.saltar()
+	assert.that(dino.position().y()==2)
+	
+}
+
+test "dino choca"{
+	juego.configurar()
+	juego.iniciar()
+	cactus.position(dino.position())
+	assert.that(game.colliders(cactus).contains(dino))
+	
+}
+
+test "cactus se mueve"{
+	cactus.mover()
+	assert.that(cactus.posicionInicial().equals(cactus.position().right(1)))
+}
+
+
+test "control límite de pantalla"{
+	cactus.position(game.at(0,0))
+	cactus.mover()
+	assert.that(cactus.position().equals(cactus.posicionInicial()))
+}
+
+test "cactus choca, dino muere, juego termina"{
+	juego.configurar()
+	juego.iniciar()
+	cactus.chocar()
+	assert.that(dino.vivo().equals(false))
+	assert.that(game.allVisuals().contains(gameOver))
+}
+
